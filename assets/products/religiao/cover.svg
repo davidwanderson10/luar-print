@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16264a"/>
+      <stop offset="1" stop-color="#0d1526"/>
+    </linearGradient>
+    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#ffffff" opacity="0.05"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="600" fill="url(#g)"/>
+  <rect width="600" height="600" fill="url(#dots)"/>
+  <circle cx="540" cy="60" r="120" fill="#e1601c" opacity="0.08"/>
+  <circle cx="40" cy="560" r="90" fill="#e1601c" opacity="0.06"/>
+  <text x="50%" y="42%" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="75" fill="#e1601c">✝</text>
+  <text x="50%" y="60%" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-weight="700" font-size="37" fill="#ffffff">Religião</text>
+  <text x="50%" y="70%" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#c9d4ea" opacity="0.85">Santos, terços e presépios</text>
+  <text x="50%" y="94%" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#8ea2c4" letter-spacing="3">LUAR PRINT · imagem ilustrativa</text>
+</svg>

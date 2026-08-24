@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luar Print — Impressão 3D personalizada em Fortaleza</title>
+  <meta name="description" content="Luar Print — artigos de impressão 3D personalizados em Fortaleza/CE. Mascotes de times, maternidade, gamers, religião e personagens. Faça sua encomenda!">
+  <meta property="og:title" content="Luar Print — Impressão 3D personalizada">
+  <meta property="og:description" content="Peças de impressão 3D sob medida em Fortaleza/CE.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="header" id="topo">
+    <div class="container header__inner">
+      <!-- 👉 LOGO: hoje é um SVG desenhado que adapta ao tema (claro/escuro).
+           Para usar o PNG oficial, troque este bloco <a class="logo">...</a> por:
+           <a href="#topo" class="logo"><img src="assets/logo/luar-print.png" alt="Luar Print" height="44"></a>
+           (coloque o arquivo em assets/logo/) -->
+      <a href="#topo" class="logo" aria-label="Luar Print — início">
+        <svg class="logo__mark" viewBox="0 0 72 78" width="38" height="41" aria-hidden="true">
+          <path d="M34 4a22 22 0 1 0 12 40 17 17 0 1 1 -12 -40z" fill="var(--logo-color)"/>
+          <rect x="20" y="44" width="28" height="5" rx="2.5" fill="var(--logo-color)"/>
+          <rect x="24" y="52" width="20" height="5" rx="2.5" fill="var(--logo-color)"/>
+          <path d="M34 60 L34 68 L10 68 L10 76" stroke="var(--brand-orange)" stroke-width="5" fill="none" stroke-linecap="round"/>
+        </svg>
+        <span class="logo__text">
+          <span class="logo__luar">LUAR</span>
+          <span class="logo__print">PRINT</span>
+        </span>
+      </a>
+
+      <nav class="nav" id="nav">
+        <a href="#topo" class="nav__link">Home</a>
+        <a href="#sobre" class="nav__link">Sobre</a>
+        <a href="#portfolio" class="nav__link">Portfólio</a>
+        <a href="#depoimentos" class="nav__link">Depoimentos</a>
+        <a href="#encomenda" class="nav__link">Contato</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+          <span class="theme-toggle__icon">🌙</span>
+        </button>
+      </nav>
+
+      <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================== HERO / SLIDER ===================== -->
+  <section class="hero" id="home">
+    <div class="slider" id="slider">
+      <div class="slider__track" id="sliderTrack"><!-- slides via JS --></div>
+      <button class="slider__arrow slider__arrow--prev" id="prevBtn" aria-label="Anterior">‹</button>
+      <button class="slider__arrow slider__arrow--next" id="nextBtn" aria-label="Próximo">›</button>
+      <div class="slider__dots" id="sliderDots"></div>
+    </div>
+  </section>
+
+  <!-- ===================== SOBRE ===================== -->
+  <section class="sobre section" id="sobre">
+    <div class="container">
+      <!-- 👉 SOBRE: ajuste o texto e os números abaixo -->
+      <span class="eyebrow">Quem somos</span>
+      <h2 class="section__title">Ideias que ganham forma</h2>
+      <p class="sobre__text">
+        A <strong>Luar Print</strong> é um estúdio de impressão 3D em <strong>Fortaleza/CE</strong> que transforma
+        ideias em peças reais e personalizadas. Do mascote do seu time à lembrancinha de maternidade, criamos
+        artigos únicos com acabamento caprichado para gamers, torcedores, fé, personagens e muito mais.
+      </p>
+      <div class="sobre__stats">
+        <div class="stat"><span class="stat__num">+500</span><span class="stat__label">peças entregues</span></div>
+        <div class="stat"><span class="stat__num">4,8/5</span><span class="stat__label">avaliação dos clientes</span></div>
+        <div class="stat"><span class="stat__num">100%</span><span class="stat__label">personalizado</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PORTFÓLIO / PRODUTOS ===================== -->
+  <section class="produtos section" id="portfolio">
+    <div class="container">
+      <span class="eyebrow">Portfólio</span>
+      <h2 class="section__title">O que a gente cria</h2>
+      <p class="section__subtitle">Clique em uma categoria para ver os modelos e valores.</p>
+      <div class="produtos__grid" id="produtosGrid"><!-- cards via JS --></div>
+    </div>
+  </section>
+
+  <!-- ===================== DEPOIMENTOS ===================== -->
+  <section class="depoimentos section" id="depoimentos">
+    <div class="container">
+      <span class="eyebrow">Depoimentos</span>
+      <h2 class="section__title">Quem já levou, aprova</h2>
+      <!-- 👉 NOTA GERAL: mude o número e o --pct juntos.
+           --pct = (nota / 5) em %. Ex.: 4,8 → 96% · 4,5 → 90% · 5,0 → 100% -->
+      <div class="rating">
+        <span class="rating__num">4,8</span>
+        <div class="rating__stars" role="img" aria-label="4,8 de 5 estrelas" style="--pct:96%">★★★★★</div>
+        <span class="rating__of">de 5 · avaliação geral</span>
+      </div>
+      <div class="depoimentos__grid" id="depoimentosGrid"><!-- via JS --></div>
+    </div>
+  </section>
+
+  <!-- ===================== ENCOMENDA / CONTATO ===================== -->
+  <section class="encomenda section" id="encomenda">
+    <div class="container encomenda__inner">
+      <div class="encomenda__intro">
+        <span class="eyebrow">Contato</span>
+        <h2 class="section__title">Faça sua encomenda</h2>
+        <p class="section__subtitle">
+          Conta pra gente o que você imaginou. Se tiver uma imagem de referência, é só anexar —
+          respondemos rapidinho pelo WhatsApp ou e-mail.
+        </p>
+        <ul class="encomenda__contacts">
+          <li>📍 Fortaleza / CE</li>
+          <li>📱 (85) 99188-2209</li>
+          <li>✉️ luarprint3d@gmail.com</li>
+        </ul>
+      </div>
+
+      <!-- 👉 DESTINO DO FORM: o e-mail no action é para onde chegam as encomendas.
+           1º envio: confirme o e-mail "Activate Form" que o FormSubmit manda. -->
+      <form class="form" id="orderForm"
+            action="https://formsubmit.co/luarprint3d@gmail.com"
+            method="POST" enctype="multipart/form-data">
+        <!-- Config FormSubmit -->
+        <input type="hidden" name="_subject" value="Nova encomenda pelo site — Luar Print">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" style="display:none">
+
+        <div class="form__row">
+          <label class="form__field">
+            <span>Nome*</span>
+            <input type="text" name="nome" required placeholder="Seu nome">
+          </label>
+          <label class="form__field">
+            <span>Telefone*</span>
+            <input type="tel" name="telefone" required placeholder="(85) 90000-0000">
+          </label>
+        </div>
+        <label class="form__field">
+          <span>E-mail*</span>
+          <input type="email" name="email" required placeholder="voce@email.com">
+        </label>
+        <label class="form__field">
+          <span>Descreva sua encomenda*</span>
+          <textarea name="descricao" rows="5" required placeholder="Ex.: quero um mascote do Ceará com uns 15cm..."></textarea>
+        </label>
+        <label class="form__field form__file">
+          <span>Anexo (imagem ou referência)</span>
+          <input type="file" name="anexo" accept="image/*,.pdf">
+          <small>Opcional · JPG, PNG ou PDF</small>
+        </label>
+        <button type="submit" class="btn btn--primary form__submit">Enviar encomenda</button>
+        <p class="form__note">Ao enviar, seus dados vão direto para nosso e-mail. Não compartilhamos com ninguém.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===================== RODAPÉ =====================
+       👉 CONTATOS: telefone, e-mail, Instagram e cidade estão aqui embaixo.
+          Se mudar o WhatsApp, troque também o link do botão flutuante e o
+          da seção "Redes" (formato: wa.me/55DDDNUMERO). -->
+  <footer class="footer" id="contato">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <svg class="logo__mark" viewBox="0 0 72 78" width="34" height="37" aria-hidden="true">
+          <path d="M34 4a22 22 0 1 0 12 40 17 17 0 1 1 -12 -40z" fill="var(--logo-color)"/>
+          <rect x="20" y="44" width="28" height="5" rx="2.5" fill="var(--logo-color)"/>
+          <rect x="24" y="52" width="20" height="5" rx="2.5" fill="var(--logo-color)"/>
+          <path d="M34 60 L34 68 L10 68 L10 76" stroke="var(--brand-orange)" stroke-width="5" fill="none" stroke-linecap="round"/>
+        </svg>
+        <p>Impressão 3D personalizada, feita com carinho em Fortaleza.</p>
+      </div>
+      <div class="footer__col">
+        <h3>Contato</h3>
+        <p>📍 Fortaleza / CE</p>
+        <p><a href="tel:+5585991882209">📱 (85) 99188-2209</a></p>
+        <p><a href="mailto:luarprint3d@gmail.com">✉️ luarprint3d@gmail.com</a></p>
+      </div>
+      <div class="footer__col">
+        <h3>Redes</h3>
+        <div class="footer__social">
+          <a href="https://instagram.com/luarprint" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s0 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58 0-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s0-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2zm0 3.13A6.67 6.67 0 1 0 18.67 12 6.67 6.67 0 0 0 12 5.33zm0 11A4.33 4.33 0 1 1 16.33 12 4.33 4.33 0 0 1 12 16.33zm6.9-11.55a1.56 1.56 0 1 1-1.56-1.56 1.56 1.56 0 0 1 1.56 1.56z"/></svg>
+            <span>@luarprint</span>
+          </a>
+          <a href="https://wa.me/5585991882209" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.9-.8-1.5-1.77-1.67-2.07-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.6-.92-2.2-.24-.58-.48-.5-.67-.5l-.57-.01c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5s1.07 2.9 1.22 3.1c.15.2 2.1 3.2 5.08 4.48.71.3 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35zM12.05 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.38 9.38 0 0 1 14.57-11.6 9.32 9.32 0 0 1 2.75 6.64c0 5.18-4.22 9.4-9.4 9.4zm7.99-17.4A11.32 11.32 0 0 0 12.04.75C5.8.75.73 5.82.73 12.06c0 2 .52 3.94 1.51 5.66L.64 23.44l5.86-1.54a11.3 11.3 0 0 0 5.54 1.41h.01c6.24 0 11.31-5.07 11.31-11.31 0-3.02-1.18-5.86-3.32-8z"/></svg>
+            <span>WhatsApp</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© <span id="year"></span> Luar Print · Fortaleza/CE · CNPJ em breve</p>
+    </div>
+  </footer>
+
+  <!-- ===================== WHATSAPP FLUTUANTE ===================== -->
+  <a href="https://wa.me/5585991882209?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20fazer%20uma%20encomenda."
+     class="whatsapp-float" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.9-.8-1.5-1.77-1.67-2.07-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.6-.92-2.2-.24-.58-.48-.5-.67-.5l-.57-.01c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5s1.07 2.9 1.22 3.1c.15.2 2.1 3.2 5.08 4.48.71.3 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35zM12.05 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.38 9.38 0 0 1 14.57-11.6 9.32 9.32 0 0 1 2.75 6.64c0 5.18-4.22 9.4-9.4 9.4zm7.99-17.4A11.32 11.32 0 0 0 12.04.75C5.8.75.73 5.82.73 12.06c0 2 .52 3.94 1.51 5.66L.64 23.44l5.86-1.54a11.3 11.3 0 0 0 5.54 1.41h.01c6.24 0 11.31-5.07 11.31-11.31 0-3.02-1.18-5.86-3.32-8z"/></svg>
+  </a>
+
+  <!-- ===================== MODAL PRODUTO ===================== -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal__overlay" data-close></div>
+    <div class="modal__box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal__close" data-close aria-label="Fechar">×</button>
+      <div class="modal__gallery">
+        <img class="modal__img" id="modalImg" src="" alt="">
+        <div class="modal__thumbs" id="modalThumbs"></div>
+      </div>
+      <div class="modal__info">
+        <h3 id="modalTitle" class="modal__title"></h3>
+        <p class="modal__desc" id="modalDesc"></p>
+        <div class="modal__price">
+          <span class="modal__price-label">a partir de</span>
+          <span class="modal__price-value" id="modalPrice"></span>
+        </div>
+        <a class="btn btn--primary modal__cta" id="modalCta" href="#encomenda" data-close>Quero encomendar</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
