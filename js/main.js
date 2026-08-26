@@ -85,10 +85,25 @@
 
   /* =========================================================================
      👉 SLIDER (topo do site) — EDITE AQUI
-     Troque os 6 arquivos assets/slider/slide-1.svg ... slide-6.svg pelas
-     fotos reais dos trabalhos. Para mais/menos slides, mude a lista abaixo.
+     Cada slide pode ser de duas formas:
+       • string  → mesma imagem no desktop e no celular:
+             'assets/slider/slide-2.svg'
+       • objeto  → imagem DIFERENTE no celular (melhor responsividade):
+             { desktop: 'assets/slider/slider1.png',
+               mobile:  'assets/slider/slider1-mobile.png' }
+     Tamanhos ideais: DESKTOP 1920x840 (16:7) · CELULAR 1080x1350 (4:5, retrato).
+     A ordem abaixo é a ordem de exibição. Comprima as fotos (até ~400 KB)!
      ========================================================================= */
-  const SLIDES = [1, 2, 3, 4, 5, 6].map(n => `assets/slider/slide-${n}.svg`);
+  const SLIDES = [
+    // Quando tiver a versão mobile, troque a linha abaixo por:
+    // { desktop: 'assets/slider/slider1.png', mobile: 'assets/slider/slider1-mobile.png' },
+    'assets/slider/slider1.png',
+    'assets/slider/slide-2.svg',
+    'assets/slider/slide-3.svg',
+    'assets/slider/slide-4.svg',
+    'assets/slider/slide-5.svg',
+    'assets/slider/slide-6.svg',
+  ];
 
   /* Velocidade do slider. O pedido era "a cada segundo"; deixei em 3s
      porque 1s é rápido demais para ver cada trabalho. Ajuste à vontade. */
@@ -179,10 +194,21 @@
     const dotsWrap = document.getElementById('sliderDots');
     let index = 0, timer = null;
 
-    SLIDES.forEach((src, i) => {
+    SLIDES.forEach((item, i) => {
+      // Cada slide pode ser uma string (mesma imagem em tudo) ou
+      // { desktop, mobile } para usar uma foto diferente no celular.
+      const desktop = typeof item === 'string' ? item : item.desktop;
+      const mobile = typeof item === 'string' ? null : item.mobile;
+      const loading = i === 0 ? 'eager' : 'lazy';
+      const media = mobile
+        ? `<picture>
+             <source media="(max-width: 540px)" srcset="${mobile}">
+             <img src="${desktop}" alt="Trabalho Luar Print ${i + 1}" loading="${loading}">
+           </picture>`
+        : `<img src="${desktop}" alt="Trabalho Luar Print ${i + 1}" loading="${loading}">`;
       const slide = document.createElement('div');
       slide.className = 'slider__slide';
-      slide.innerHTML = `<img src="${src}" alt="Trabalho Luar Print ${i + 1}" loading="${i === 0 ? 'eager' : 'lazy'}">`;
+      slide.innerHTML = media;
       track.appendChild(slide);
 
       const dot = document.createElement('button');
