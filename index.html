@@ -23,18 +23,10 @@
            Para usar o PNG oficial, troque este bloco <a class="logo">...</a> por:
            <a href="#topo" class="logo"><img src="assets/logo/luar-print.png" alt="Luar Print" height="44"></a>
            (coloque o arquivo em assets/logo/) -->
-      <a href="#topo" class="logo" aria-label="Luar Print — início">
-        <svg class="logo__mark" viewBox="0 0 72 78" width="38" height="41" aria-hidden="true">
-          <path d="M34 4a22 22 0 1 0 12 40 17 17 0 1 1 -12 -40z" fill="var(--logo-color)"/>
-          <rect x="20" y="44" width="28" height="5" rx="2.5" fill="var(--logo-color)"/>
-          <rect x="24" y="52" width="20" height="5" rx="2.5" fill="var(--logo-color)"/>
-          <path d="M34 60 L34 68 L10 68 L10 76" stroke="var(--brand-orange)" stroke-width="5" fill="none" stroke-linecap="round"/>
-        </svg>
-        <span class="logo__text">
-          <span class="logo__luar">LUAR</span>
-          <span class="logo__print">PRINT</span>
-        </span>
+      <a href="#topo" class="logo" style="margin: 10px;">
+        <img src="assets/logo/logobranca.png" alt="Luar Print" height="70">
       </a>
+      
 
       <nav class="nav" id="nav">
         <a href="#topo" class="nav__link">Home</a>
@@ -115,7 +107,7 @@
         <span class="eyebrow">Contato</span>
         <h2 class="section__title">Faça sua encomenda</h2>
         <p class="section__subtitle">
-          Conta pra gente o que você imaginou. Se tiver uma imagem de referência, é só anexar —
+          Gostou de algum dos nossos produtos ou tem uma idéia própria? Conta pra gente o que você imaginou. Se tiver uma imagem de referência, é só anexar —
           respondemos rapidinho pelo WhatsApp ou e-mail.
         </p>
         <ul class="encomenda__contacts">
@@ -172,12 +164,9 @@
   <footer class="footer" id="contato">
     <div class="container footer__inner">
       <div class="footer__brand">
-        <svg class="logo__mark" viewBox="0 0 72 78" width="34" height="37" aria-hidden="true">
-          <path d="M34 4a22 22 0 1 0 12 40 17 17 0 1 1 -12 -40z" fill="var(--logo-color)"/>
-          <rect x="20" y="44" width="28" height="5" rx="2.5" fill="var(--logo-color)"/>
-          <rect x="24" y="52" width="20" height="5" rx="2.5" fill="var(--logo-color)"/>
-          <path d="M34 60 L34 68 L10 68 L10 76" stroke="var(--brand-orange)" stroke-width="5" fill="none" stroke-linecap="round"/>
-        </svg>
+        <div class="logo__mark" viewBox="0 0 72 78" width="34" height="37" aria-hidden="true">
+          <img src="assets/logo/logobranca.png" alt="Luar Print" height="70">
+        </div>
         <p>Impressão 3D personalizada, feita com carinho em Fortaleza.</p>
       </div>
       <div class="footer__col">
@@ -201,7 +190,7 @@
       </div>
     </div>
     <div class="footer__bottom">
-      <p>© <span id="year"></span> Luar Print · Fortaleza/CE · CNPJ em breve</p>
+      <p>© <span id="year"></span> Luar Print · Fortaleza/CE · Todos os direitos reservados.</p>
     </div>
   </footer>
 
@@ -223,11 +212,12 @@
       <div class="modal__info">
         <h3 id="modalTitle" class="modal__title"></h3>
         <p class="modal__desc" id="modalDesc"></p>
+        <p class="modal__variacao" id="modalVariacao"></p>
         <div class="modal__price">
           <span class="modal__price-label">a partir de</span>
           <span class="modal__price-value" id="modalPrice"></span>
         </div>
-        <a class="btn btn--primary modal__cta" id="modalCta" href="#encomenda" data-close>Quero encomendar</a>
+        <a class="btn btn--primary modal__cta" id="modalCta" href="#encomenda" target="_blank" rel="noopener" data-close>Quero encomendar no WhatsApp</a>
       </div>
     </div>
   </div>

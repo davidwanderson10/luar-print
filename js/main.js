@@ -10,18 +10,41 @@
      Cada item vira um card. Ao clicar, abre o modal com galeria, descrição e preço.
        titulo : nome que aparece no card e no modal
        badge  : etiqueta pequena no canto da imagem
-       preco  : valor "a partir de" (o texto "a partir de" já é fixo no layout)
        desc   : descrição que aparece no modal
-       imgs   : lista de imagens da categoria. Os nomes ('cover','1','2'...)
-                apontam para assets/products/<slug>/<nome>.svg
-                → troque os arquivos .svg pelas FOTOS REAIS (pode ser .jpg:
-                  ex. imgs: ['cover.jpg','1.jpg'] e ajuste imgPath abaixo).
+
+     IMAGENS — duas formas:
+       a) variacoes: cada imagem tem NOME, PREÇO e (opcional) DESCRIÇÃO próprios
+          (ex.: mascote de cada time). Ao clicar na miniatura, o modal mostra o
+          nome, o preço e — se houver — a descrição daquela variação.
+          O card usa a 1ª imagem e o MENOR preço ("a partir de").
+            variacoes: [
+              { img: 'ceara.jpg',    nome: 'Ceará',    preco: 'R$ 45', desc: 'Mascote Vozão em resina, 12 cm.' },
+              { img: 'flamengo.jpg', nome: 'Flamengo', preco: 'R$ 50' },  // desc é opcional
+            ]
+       b) imgs + preco: forma simples (galeria sem nome por imagem, preço único).
+            imgs: ['cover', '1', '2'], preco: 'R$ 40'
+
+     ONDE FICAM AS FOTOS:
+       Coloque os arquivos em  assets/products/<slug>/   (ex.: assets/products/mascotes/).
+       No 'img' use o nome do arquivo COM a extensão da foto real: 'ceara.jpg',
+       'flamengo.png', 'gremio.webp'. (Sem extensão, o site procura um .svg.)
+       Se a variação não tiver 'desc', o modal usa a descrição da categoria (desc do bloco).
      Para adicionar/remover categorias: copie ou apague um bloco { ... }.
      ========================================================================= */
   const PRODUTOS = [
-    { slug: 'mascotes', titulo: 'Mascote do seu time', badge: 'Times', preco: 'R$ 45',
+    { slug: 'mascotes', titulo: 'Mascote do seu time', badge: 'Times',
       desc: 'Mascotes e escudos dos principais times do Brasil, do seu coração ao seu balcão. Vários tamanhos e cores.',
-      imgs: ['cover', '1', '2', '3'] },
+      variacoes: [
+        // Fotos reais em assets/products/mascotes/. Ajuste nome/preço se precisar
+        // e reescreva os 'desc' abaixo. (Conferir os nomes marcados com ⚠️.)
+        { img: 'mascotepal.png',  nome: 'Palmeiras',    preco: 'R$ 50', desc: 'Descrição do mascote do Palmeiras.' },
+        { img: 'mascotecea.png',  nome: 'Ceará',        preco: 'R$ 45', desc: 'Descrição do mascote do Ceará.' },
+        { img: 'mascotefor.png',  nome: 'Fortaleza',    preco: 'R$ 45', desc: 'Descrição do mascote do Fortaleza.' },
+        { img: 'mascotefla.png',  nome: 'Flamengo',     preco: 'R$ 50', desc: 'Descrição do mascote do Flamengo.' },
+        { img: 'mascotefla2.png', nome: 'Flamengo (2)', preco: 'R$ 50', desc: 'Descrição do segundo modelo do Flamengo.' }, // ⚠️ 2ª foto do Flamengo
+        { img: 'mascotecor.png',  nome: 'Corinthians',  preco: 'R$ 50', desc: 'Descrição do mascote do Corinthians.' },
+        { img: 'mascotecor2.png', nome: 'Corinthians (2)', preco: 'R$ 50', desc: 'Descrição do segundo modelo do Corinthians.' }, // ⚠️ confira: Corinthians ou Coritiba?
+      ] },
     { slug: 'maternidade', titulo: 'Maternidade', badge: 'Baby', preco: 'R$ 25',
       desc: 'Lembrancinhas, topos de bolo, plaquinhas de porta e enfeites para chá de bebê e nascimento.',
       imgs: ['cover', '1', '2', '3'] },
@@ -71,7 +94,38 @@
      porque 1s é rápido demais para ver cada trabalho. Ajuste à vontade. */
   const AUTOPLAY_MS = 3000;
 
-  const imgPath = (slug, name) => `assets/products/${slug}/${name}.svg`;
+  // Se o nome já vier com extensão (.jpg/.png/.webp), usa como está; senão assume .svg.
+  const imgPath = (slug, name) => `assets/products/${slug}/${/\.\w+$/.test(name) ? name : name + '.svg'}`;
+
+  /* Número do WhatsApp (só dígitos, com DDI 55). Usado no botão do modal. */
+  const WHATSAPP = '5585991882209';
+  /* Monta o link do WhatsApp já com os dados do produto/variação escolhidos. */
+  function whatsappLink(titulo, variacao) {
+    let msg = `Olá! Vim pelo site da Luar Print e quero encomendar: ${titulo}`;
+    if (variacao && variacao.nome) msg += ` — ${variacao.nome}`;
+    if (variacao && variacao.preco) msg += ` (${variacao.preco})`;
+    msg += '. Pode me ajudar?';
+    return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+  }
+
+  /* Normaliza o produto para uma lista de variações {img, nome, preco},
+     aceitando tanto o formato novo (variacoes) quanto o antigo (imgs + preco). */
+  function variacoesOf(p) {
+    if (Array.isArray(p.variacoes) && p.variacoes.length) return p.variacoes;
+    return (p.imgs || ['cover']).map(n => ({ img: n, nome: '', preco: p.preco || '' }));
+  }
+  /* "R$ 45" -> 45 ; "R$ 1.250,90" -> 1250.9 ; vazio -> Infinity */
+  function precoNum(s) {
+    const n = parseFloat(String(s).replace(/[^\d,]/g, '').replace(',', '.'));
+    return isNaN(n) ? Infinity : n;
+  }
+  /* Preço exibido no card: menor preço entre as variações (preservando o texto). */
+  function precoCard(p) {
+    const vs = variacoesOf(p);
+    let melhor = null, min = Infinity;
+    vs.forEach(v => { const n = precoNum(v.preco); if (n < min) { min = n; melhor = v; } });
+    return melhor && melhor.preco ? melhor.preco : (p.preco || '');
+  }
 
   document.addEventListener('DOMContentLoaded', () => {
     initTheme();
@@ -169,22 +223,52 @@
   /* ---------- Produtos ---------- */
   function renderProdutos() {
     const grid = document.getElementById('produtosGrid');
-    grid.innerHTML = PRODUTOS.map((p, i) => `
+    grid.innerHTML = PRODUTOS.map((p, i) => {
+      const vs = variacoesOf(p);
+      const multi = vs.length > 1;
+      const nav = multi ? `
+          <button type="button" class="card__nav card__nav--prev" aria-label="Imagem anterior">‹</button>
+          <button type="button" class="card__nav card__nav--next" aria-label="Próxima imagem">›</button>
+          <div class="card__dots">${vs.map((_, k) =>
+            `<span class="card__dot${k === 0 ? ' is-active' : ''}"></span>`).join('')}</div>` : '';
+      return `
       <article class="card" data-index="${i}" tabindex="0" role="button" aria-label="${p.titulo}">
         <div class="card__media">
           <span class="card__badge">${p.badge}</span>
-          <img src="${imgPath(p.slug, p.imgs[0])}" alt="${p.titulo}" loading="lazy">
+          <img src="${imgPath(p.slug, vs[0].img)}" alt="${vs[0].nome || p.titulo}" loading="lazy">
+          ${nav}
         </div>
         <div class="card__body">
           <h3 class="card__title">${p.titulo}</h3>
-          <p class="card__price">a partir de <b>${p.preco}</b></p>
+          <p class="card__price">a partir de <b>${precoCard(p)}</b></p>
         </div>
-      </article>`).join('');
+      </article>`;
+    }).join('');
 
     grid.querySelectorAll('.card').forEach(card => {
-      const open = () => openModal(PRODUTOS[+card.dataset.index]);
+      const p = PRODUTOS[+card.dataset.index];
+      const vs = variacoesOf(p);
+      const img = card.querySelector('.card__media img');
+      const dots = [...card.querySelectorAll('.card__dot')];
+      let idx = 0;
+
+      const show = k => {
+        idx = (k + vs.length) % vs.length;
+        img.src = imgPath(p.slug, vs[idx].img);
+        img.alt = vs[idx].nome || p.titulo;
+        dots.forEach((d, di) => d.classList.toggle('is-active', di === idx));
+      };
+      // Setas navegam sem abrir o modal.
+      card.querySelector('.card__nav--prev')?.addEventListener('click', e => { e.stopPropagation(); show(idx - 1); });
+      card.querySelector('.card__nav--next')?.addEventListener('click', e => { e.stopPropagation(); show(idx + 1); });
+
+      const open = () => openModal(p, idx);
       card.addEventListener('click', open);
-      card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); show(idx + 1); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); show(idx - 1); }
+      });
     });
   }
 
@@ -209,22 +293,37 @@
       el.addEventListener('click', closeModal));
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
   }
-  function openModal(p) {
+  function openModal(p, start = 0) {
     const bigImg = document.getElementById('modalImg');
     const thumbs = document.getElementById('modalThumbs');
+    const varEl = document.getElementById('modalVariacao');
+    const priceLabel = modalEl.querySelector('.modal__price-label');
+    const priceVal = document.getElementById('modalPrice');
+    const cta = document.getElementById('modalCta');
+    const descEl = document.getElementById('modalDesc');
     document.getElementById('modalTitle').textContent = p.titulo;
-    document.getElementById('modalDesc').textContent = p.desc;
-    document.getElementById('modalPrice').textContent = p.preco;
 
-    const srcs = p.imgs.map(n => imgPath(p.slug, n));
-    bigImg.src = srcs[0]; bigImg.alt = p.titulo;
-    thumbs.innerHTML = srcs.map((s, i) =>
-      `<img src="${s}" alt="${p.titulo} ${i + 1}" class="${i === 0 ? 'is-active' : ''}">`).join('');
-    thumbs.querySelectorAll('img').forEach((t, i) => t.addEventListener('click', () => {
+    const vs = variacoesOf(p);
+    const srcs = vs.map(v => imgPath(p.slug, v.img));
+
+    function select(i) {
+      const v = vs[i];
       bigImg.src = srcs[i];
-      thumbs.querySelectorAll('img').forEach(x => x.classList.remove('is-active'));
-      t.classList.add('is-active');
-    }));
+      bigImg.alt = v.nome ? `${p.titulo} — ${v.nome}` : p.titulo;
+      varEl.textContent = v.nome || '';
+      varEl.style.display = v.nome ? '' : 'none';
+      descEl.textContent = v.desc || p.desc;
+      priceVal.textContent = v.preco || '';
+      // Variação com nome = preço exato daquela peça; sem nome = "a partir de".
+      priceLabel.textContent = v.nome ? 'valor' : 'a partir de';
+      cta.href = whatsappLink(p.titulo, v);
+      thumbs.querySelectorAll('img').forEach((x, xi) => x.classList.toggle('is-active', xi === i));
+    }
+
+    thumbs.innerHTML = srcs.map((s, i) =>
+      `<img src="${s}" alt="${vs[i].nome || `${p.titulo} ${i + 1}`}" title="${vs[i].nome || ''}">`).join('');
+    thumbs.querySelectorAll('img').forEach((t, i) => t.addEventListener('click', () => select(i)));
+    select(Math.min(Math.max(start, 0), vs.length - 1));
 
     modalEl.classList.add('is-open');
     modalEl.setAttribute('aria-hidden', 'false');
